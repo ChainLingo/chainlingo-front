@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import logo from './assets/chainlingo_logo.svg'
-import './App.css'
+import logo from '/assets/chainlingo_logo.svg'
+import '../css/App.css'
 
 function App() {
   const [count, setCount] = useState(0);
@@ -9,11 +9,11 @@ function App() {
   return (
     <>
       <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={logo} className="logo" alt="Vite logo" />
+        <a href="https://github.com/ChainLingo/chainlingo-front" target="_blank">
+          <img src={logo} className="logo" alt="chainlingo logo" />
         </a>
         <a href="https://react.dev" target="_blank">
-          <img src={logo} className="logo react" alt="React logo" />
+          <img src={logo} className="logo react" alt="Moving chainlingo logo" />
         </a>
       </div>
       <h1>ChainLingo 1.0</h1>
