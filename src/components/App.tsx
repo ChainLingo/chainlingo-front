@@ -1,10 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import logo from '/assets/chainlingo_logo.svg'
 import '../css/App.css'
+import { record } from '../global-type'
 
 function App() {
   const [count, setCount] = useState(0);
-  // const [topRecord,setTopRecord] = useState([]);
+  const [leaderboardArray, setLeaderboardArray] = useState<null | record[]>();
+  const [isLoading, setIsLoading] = useState(false);
+
+    async function getLeaderBoard(): Promise<void> {
+    try {
+      setIsLoading(true);
+      let leaderBoard = await fetch('https://chain-lingo-back.onrender.com/record/leaderboard', { method: 'GET' })
+        .then(res => res.json());
+      setLeaderboardArray(leaderBoard);
+    }
+    catch (err) { console.error(err); }
+    finally { setIsLoading(false); }
+  }
 
   return (
     <>
@@ -25,9 +38,18 @@ function App() {
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className='leader-board'>
+        <button onClick={getLeaderBoard} disabled={isLoading}>
+          {isLoading ? 'Loading...' : 'Fetch Leaderboard'}
+        </button>
+        {leaderboardArray ?
+          (<ul>
+            {leaderboardArray.map(entry => (
+              <li key={entry.id}>{entry.user_name} - Streak: {entry.streak} | Max word length {entry.max_len}</li>
+            ))}
+          </ul>)
+          : <p>No leaderboard data available.</p>}
+      </div>
     </>
   )
 }
