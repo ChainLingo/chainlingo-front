@@ -3,6 +3,7 @@ import logo from '/assets/chainlingo_logo.svg'
 import '../css/App.css'
 import LeaderBoard from './LeaderBoard';
 import Rule from './Rule';
+import Game from './Game';
 
 
 function App() {
@@ -21,11 +22,13 @@ function App() {
       </header>
       <main>
         <div className="game">
-          <Rule />
-          <button className='start' onClick={() => setIsPlaying(true)} disabled={isPlaying}>
-            {isPlaying ? 'loading...' : 'Start'}
-          </button>
-
+          {!isPlaying ?
+            (<><Rule />
+              <button className='start' onClick={() => setIsPlaying(true)} disabled={isPlaying}>
+                {isPlaying ? 'loading...' : 'Start'}
+              </button></>)
+            : <><Game /></>
+          }
         </div>
       </main>
       <footer>

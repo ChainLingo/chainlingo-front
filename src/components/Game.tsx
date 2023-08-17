@@ -1,0 +1,112 @@
+import { useState, useRef, useEffect } from 'react'
+import { randomNum26 } from '../util/helper'
+import '../css/Game.css'
+
+const tilePlacement: string[] = ["top-right", "top-left", "bottom-left", "bottom-right"]
+
+function Game() {
+    const initialCharIndex: number = randomNum26();
+    const [count, setCount] = useState<number>(1)
+    const allChar = ["w", "o", "m", "k", "s", "n", "f", "b", "d", "c", "l", "a", "g", "u", "z", "y", "r", "j", "p", "t", "v", "e", "h", "i"];
+    const [gameTile, setGameTile] = useState<string>(allChar[initialCharIndex]);
+    let [playerTiles, setPlayerTiles] = useState<string[]>([allChar[randomNum26()]]);
+    const [verified, setVerified] = useState<boolean | null>(null);
+    const [verMessage, setVerMessage] = useState<string | null>(null);
+    const [history, setHistory] = useState<string[]>([]);//setHistory([...history,input])
+    const [longest, setLongest] = useState<string[]>([]);
+    const [submit, setSubmit] = useState<boolean>(false);
+    const [input, setInput] = useState<string>('');
+    const inputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+
+        for (let i = 1; i <= 3; i++) {
+            let index = randomNum26()
+            console.log('randomNum', index)
+            setPlayerTiles([...playerTiles, allChar[index]])
+        }
+        setCount(count + 1)
+
+    }, [history])
+
+    const handleSubmit = async () => {
+        console.log('varidating')
+        setSubmit(true);
+        const lastChar = input[input.length - 1].toLowerCase();
+        console.log('input', input, lastChar)
+        const tileIndex = playerTiles.indexOf(lastChar);
+
+        try {
+            if (tileIndex < 0) {
+                setVerMessage('The last letter does not match any of your Letter Tiles.')
+                console.log(verMessage)
+            }
+            else if (history.length > 0 && history.includes(input)) {
+                setVerMessage('Word already used');
+                console.log(verMessage)
+            }
+            else {
+                await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
+                    .then(response => {
+                        if (response.status === 200) {
+                            setVerified(true);
+                            setVerMessage('Awesome!');
+                            setHistory([...history, input]);
+                            setGameTile(lastChar.toUpperCase());
+                            setPlayerTiles(playerTiles.filter((crrChar) => crrChar !== lastChar))
+                            if (playerTiles.length && playerTiles.length < 4) setPlayerTiles([...playerTiles, allChar[randomNum26()]])
+                            longest.length > 0 && longest[0].length === input.length ? setLongest([...longest, input])
+                                : longest[0].length < input.length && setLongest([input]);
+                        }// Word is valid
+                        else if (response.status === 404) {
+                            setVerMessage('Invalid word!');
+                            setVerified(false);
+                        }// Word is not valid
+                        else { console.error('Dictionary API response format was neither array or object:', response.body); }// Invalid response format
+                    })
+            }
+        }
+        catch (error) { console.error('Something went wrong...', error); }
+        finally {
+            setSubmit(false)
+            setTimeout(() => {
+                setVerified(null)
+                setVerMessage(null)
+            }, 1000)
+        }
+    }
+    return (
+        <>
+            <div className="container">
+                <div className="timer">Time remaining:</div>
+                <div className="field-tile">{gameTile}</div>
+                <div className="score">
+                    <p>Streak: ${history.length}<br />Longest: {longest.length > 0 ?? `${longest[0].length} letters (${longest.join(', ')})`}</p></div>
+                <div className="player-tile">
+                    {playerTiles[0] && <div className={`tile ${tilePlacement[0]}`} key={0}>{playerTiles[0]}</div>}
+                    {playerTiles[1] && <div className={`tile ${tilePlacement[1]}`} key={1}>{playerTiles[1]}</div>}
+                    {playerTiles[2] && <div className={`tile ${tilePlacement[2]}`} key={2}>{playerTiles[2]}</div>}
+                    {playerTiles[3] && <div className={`tile ${tilePlacement[3]}`} key={3}>{playerTiles[3]}</div>}
+                </div>
+                <div className="History">{history.join(' 👉 ')}</div>
+                <div className="input">
+                    Press "Enter" key to submit
+                    <input
+                        className='player-input'
+                        placeholder='Type here!'
+                        type='text'
+                        ref={inputRef}
+                        onChange={(e) => { setInput(e.target.value.toUpperCase()) }}
+                        onKeyDown={(e) => {
+                            e.key === 'Enter' && handleSubmit()
+                            console.log(input)
+                        }}
+                        disabled={submit}
+                    />
+                    <p>{verMessage && verMessage}</p>
+                </div>
+            </div >
+        </>
+    )
+}
+export default Game;

@@ -1,0 +1,66 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr) 2fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+        "timer History"
+        "field-tile History"
+        "input input"
+        "score player-tile";
+}
+
+.timer {
+    justify-self: center;
+    align-self: center;
+    grid-area: timer;
+}
+
+.field-tile {
+    justify-self: center;
+    align-self: center;
+    grid-area: field-tile;
+}
+
+.score {
+    justify-self: center;
+    align-self: center;
+    grid-area: score;
+}
+
+.player-tile {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 0px 0px;
+    grid-auto-flow: column;
+    grid-template-areas:
+        "top-left top-right"
+        "bottom-left bottom-right";
+    grid-area: player-tile;
+}
+
+.top-right {
+    grid-area: top-right;
+}
+
+.top-left {
+    grid-area: top-left;
+}
+
+.bottom-left {
+    grid-area: bottom-left;
+}
+
+.bottom-right {
+    grid-area: bottom-right;
+}
+
+.History {
+    grid-area: History;
+}
+
+.input {
+    grid-area: input;
+}
