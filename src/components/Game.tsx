@@ -10,7 +10,6 @@ function Game() {
     const allChar = ["w", "o", "m", "k", "s", "n", "f", "b", "d", "c", "l", "a", "g", "u", "z", "y", "r", "j", "p", "t", "v", "e", "h", "i"];
     const [gameTile, setGameTile] = useState<string>(allChar[initialCharIndex]);
     let [playerTiles, setPlayerTiles] = useState<string[]>(["n", "f", "b", "d"]);
-    const [verified, setVerified] = useState<boolean | null>(null);
     const [verMessage, setVerMessage] = useState<string | null>(null);
     const [history, setHistory] = useState<string[]>([]);
     const [longest, setLongest] = useState<string[]>([]);
@@ -58,7 +57,7 @@ function Game() {
                 await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
                     .then(response => {
                         if (response.status === 200) {
-                            setVerified(true);
+                            (true);
                             setVerMessage('Awesome!');
                             setHistory([...history, input]);
                             setGameTile(lastChar.toUpperCase());
@@ -66,12 +65,12 @@ function Game() {
                             if (playerTiles.length && playerTiles.length < 4) setPlayerTiles([...playerTiles, allChar[randomNum26()]])
                             if (longest.length > 0) {
                                 longest[0].length === input.length ? setLongest([...longest, input])
-                                : longest[0].length < input.length && setLongest([input]);
+                                    : longest[0].length < input.length && setLongest([input]);
                             }
                         }// Word is valid
                         else if (response.status === 404) {
                             setVerMessage('Invalid word!');
-                            setVerified(false);
+                            (false);
                         }// Word is not valid
                         else { console.error('Dictionary API response format was neither array or object:', response.body); }// Invalid response format
                     })
@@ -81,7 +80,7 @@ function Game() {
         finally {
             setSubmit(false)
             setTimeout(() => {
-                setVerified(null)
+                (null)
                 setVerMessage(null)
             }, 1000)
         }
