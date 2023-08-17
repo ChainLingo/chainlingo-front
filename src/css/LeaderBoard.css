@@ -1,15 +1,52 @@
-.record::marker{
-font-weight: bold;
+.leader-board {
+    justify-content: center;
 }
 
-.leader-board{
-    padding: 10px;
+h2 {
+    text-align: center;
 }
 
-ul{
-    padding-left: 0;
+table {
+    /*Not to show the space inbetween cells*/
+    border-spacing: 0;
+    /*Getting rid of the border frame. 'separate' instead of 'collapse' so that I can make the top part round.*/
+    border-collapse: separate;
+    border-top: solid;
+    border-top-color: #f7cb4d;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 10px;
+
+    border-bottom: solid 0.3rem;
+    border-bottom-color: #f7cb4d;
+
+    /*X-position  Y-position ぼかしsize shadow-size shadow-color*/
+    box-shadow: 1px 0 10px 1px #56565617;
 }
 
-li{
-    list-style: none;
+th,
+td {
+    text-align: center;
+    padding-inline: 4rem;
+    padding-block: 0.5rem;
+}
+
+th {
+    background-color: #f7cb4d;
+}
+
+td {
+    border-bottom: solid 1px;
+    border-bottom-color: #d2a014;
+}
+
+tr:nth-child(odd) {
+    background: #fff3db;
+}
+
+tr:nth-child(even) {
+    background: white;
+}
+
+tr:hover {
+    background-color: #ffe587;
 }

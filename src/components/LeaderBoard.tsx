@@ -17,14 +17,23 @@ export default function LeaderBoard() {
     useEffect(() => { getLeaderBoard() }, [])
 
     return (
-    <div className='leader-board'>
-        {"<Leader board>"}
-        {leaderboardArray ?
-            (<ul>
-                {leaderboardArray.map(entry => (
-                    <li key={entry.id} className='record'>{entry.user_name} - Streak: {entry.streak} | Max word length {entry.max_len}</li>
-                ))}
-            </ul>)
-            : <p>Loading</p>}
-    </div>)
+        <div className='leader-board'>
+            <h2>{"<Leader board>"}</h2>
+            {leaderboardArray ?
+                (<table className='lb-tb'>
+                    <thead>
+                        <tr className='th-row'>
+                            <th>Streak</th>
+                            <th>Word length</th>
+                            <th>Player</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {leaderboardArray.map(entry => (
+                            (<tr key={entry.id} className='record'><td>{entry.streak}</td><td>{entry.max_len}</td><td>{entry.user_name}</td></tr>)
+                        ))}
+                    </tbody>
+                </table>)
+                : <p>Loading</p>}
+        </div>)
 }
