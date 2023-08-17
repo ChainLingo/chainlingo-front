@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import logo from '/assets/chainlingo_logo.svg'
 import '../css/App.css'
 import { record } from '../global-type'
