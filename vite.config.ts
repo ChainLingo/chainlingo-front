@@ -7,7 +7,7 @@ export default defineConfig({
   base: './', //Use relative path
   root: './src', //Define dev directory
   build: {
-    outDir: './dist',
+    outDir: '../dist',
     rollupOptions: {
       output: {
         assetFileNames: (assetInfo) => {
@@ -23,8 +23,8 @@ export default defineConfig({
           }
           return `assets/${extType}/[name][extname]`;
         },
-        chunkFileNames: 'assets/ts/main.ts',
-        entryFileNames: 'assets/ts/main.ts',
+        chunkFileNames: 'assets/js/[name].js',
+        entryFileNames: 'assets/js/[name].js',
       },
     },
     
