@@ -22,6 +22,9 @@ table {
     /*X-position  Y-position ぼかしsize shadow-size shadow-color*/
     box-shadow: 1px 0 10px 1px #56565617;
 }
+table.lb-tb {
+    margin: 0 auto;
+  }
 
 th,
 td {
