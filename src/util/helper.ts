@@ -1,0 +1,1 @@
+export const randomNum26 = () => { return Math.floor(Math.random() * 26) }
