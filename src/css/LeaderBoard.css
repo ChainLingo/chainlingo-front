@@ -1,0 +1,15 @@
+.record::marker{
+font-weight: bold;
+}
+
+.leader-board{
+    padding: 10px;
+}
+
+ul{
+    padding-left: 0;
+}
+
+li{
+    list-style: none;
+}
