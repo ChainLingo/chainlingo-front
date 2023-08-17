@@ -9,24 +9,33 @@ function Game() {
     const [count, setCount] = useState<number>(1)
     const allChar = ["w", "o", "m", "k", "s", "n", "f", "b", "d", "c", "l", "a", "g", "u", "z", "y", "r", "j", "p", "t", "v", "e", "h", "i"];
     const [gameTile, setGameTile] = useState<string>(allChar[initialCharIndex]);
-    let [playerTiles, setPlayerTiles] = useState<string[]>([allChar[randomNum26()]]);
+    let [playerTiles, setPlayerTiles] = useState<string[]>(["n", "f", "b", "d"]);
     const [verified, setVerified] = useState<boolean | null>(null);
     const [verMessage, setVerMessage] = useState<string | null>(null);
-    const [history, setHistory] = useState<string[]>([]);//setHistory([...history,input])
+    const [history, setHistory] = useState<string[]>([]);
     const [longest, setLongest] = useState<string[]>([]);
     const [submit, setSubmit] = useState<boolean>(false);
     const [input, setInput] = useState<string>('');
     const inputRef = useRef<HTMLInputElement>(null);
+    const [timeLeft, setTimeLeft] = useState(60); // Initial time in seconds
 
     useEffect(() => {
+        if (timeLeft > 0) {
+            const timer = setInterval(() => {
+                setTimeLeft(timeLeft - 1);
+            }, 1000);
 
+            return () => clearInterval(timer); // Clean up interval when component unmounts
+        }
+    }, [timeLeft]);
+
+    useEffect(() => {
         for (let i = 1; i <= 3; i++) {
             let index = randomNum26()
             console.log('randomNum', index)
             setPlayerTiles([...playerTiles, allChar[index]])
         }
         setCount(count + 1)
-
     }, [history])
 
     const handleSubmit = async () => {
@@ -55,8 +64,10 @@ function Game() {
                             setGameTile(lastChar.toUpperCase());
                             setPlayerTiles(playerTiles.filter((crrChar) => crrChar !== lastChar))
                             if (playerTiles.length && playerTiles.length < 4) setPlayerTiles([...playerTiles, allChar[randomNum26()]])
-                            longest.length > 0 && longest[0].length === input.length ? setLongest([...longest, input])
+                            if (longest.length > 0) {
+                                longest[0].length === input.length ? setLongest([...longest, input])
                                 : longest[0].length < input.length && setLongest([input]);
+                            }
                         }// Word is valid
                         else if (response.status === 404) {
                             setVerMessage('Invalid word!');
@@ -76,9 +87,9 @@ function Game() {
         }
     }
     return (
-        <>
+        <>{timeLeft > 0 ? (
             <div className="container">
-                <div className="timer">Time remaining:</div>
+                <div className="timer"><p>Time remaining: {timeLeft} seconds</p></div>
                 <div className="field-tile">{gameTile}</div>
                 <div className="score">
                     <p>Streak: ${history.length}<br />Longest: {longest.length > 0 ?? `${longest[0].length} letters (${longest.join(', ')})`}</p></div>
@@ -105,7 +116,8 @@ function Game() {
                     />
                     <p>{verMessage && verMessage}</p>
                 </div>
-            </div >
+            </div >)
+            : <div>Game over</div>}
         </>
     )
 }
