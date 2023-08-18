@@ -11,6 +11,10 @@
         "score player-tile";
 }
 
+.desk {
+    display: block;
+}
+
 .timer {
     justify-self: center;
     align-self: center;
@@ -63,4 +67,5 @@
 
 .input {
     grid-area: input;
+    display: block;
 }

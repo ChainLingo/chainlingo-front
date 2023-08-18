@@ -12,7 +12,7 @@ function Game() {
     let [playerTiles, setPlayerTiles] = useState<string[]>(["n", "f", "b", "d"]);
     const [verMessage, setVerMessage] = useState<string | null>(null);
     const [history, setHistory] = useState<string[]>([]);
-    const [longest, setLongest] = useState<string[]>([]);
+    const [longest, setLongest] = useState<string>('');
     const [submit, setSubmit] = useState<boolean>(false);
     const [input, setInput] = useState<string>('');
     const inputRef = useRef<HTMLInputElement>(null);
@@ -56,22 +56,25 @@ function Game() {
             else {
                 await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${input}`)
                     .then(response => {
-                        if (response.status === 200) {
+                        if (response.status === 200) {// Word is valid
                             (true);
                             setVerMessage('Awesome!');
                             setHistory([...history, input]);
                             setGameTile(lastChar.toUpperCase());
                             setPlayerTiles(playerTiles.filter((crrChar) => crrChar !== lastChar))
-                            if (playerTiles.length && playerTiles.length < 4) setPlayerTiles([...playerTiles, allChar[randomNum26()]])
-                            if (longest.length > 0) {
-                                longest[0].length === input.length ? setLongest([...longest, input])
-                                    : longest[0].length < input.length && setLongest([input]);
+                            if (playerTiles.length && playerTiles.length < 4) {
+                                setPlayerTiles([...playerTiles, allChar[randomNum26()]])
                             }
-                        }// Word is valid
-                        else if (response.status === 404) {
+                            if (longest === '') { setLongest(input) }
+                            else if (longest.length < input.length) {
+                                setLongest(input);
+                                console.log('longest', longest)
+                            }
+                        }
+                        else if (response.status === 404) {// Word is not valid
                             setVerMessage('Invalid word!');
                             (false);
-                        }// Word is not valid
+                        }
                         else { console.error('Dictionary API response format was neither array or object:', response.body); }// Invalid response format
                     })
             }
@@ -91,7 +94,7 @@ function Game() {
                 <div className="timer"><p>Time remaining: {timeLeft} seconds</p></div>
                 <div className="field-tile">{gameTile}</div>
                 <div className="score">
-                    <p>Streak: ${history.length}<br />Longest: {longest.length > 0 ?? `${longest[0].length} letters (${longest.join(', ')})`}</p></div>
+                    <p>Streak: {history.length}<br />Longest: {longest}({longest.length != 0 && `${longest.length} letters`})</p></div>
                 <div className="player-tile">
                     {playerTiles[0] && <div className={`tile ${tilePlacement[0]}`} key={0}>{playerTiles[0]}</div>}
                     {playerTiles[1] && <div className={`tile ${tilePlacement[1]}`} key={1}>{playerTiles[1]}</div>}
@@ -100,7 +103,7 @@ function Game() {
                 </div>
                 <div className="History">{history.join(' 👉 ')}</div>
                 <div className="input">
-                    Press "Enter" key to submit
+                    <div className='desc'>Pess "Enter" key to submit</div>
                     <input
                         className='player-input'
                         placeholder='Type here!'
@@ -109,6 +112,7 @@ function Game() {
                         onChange={(e) => { setInput(e.target.value.toUpperCase()) }}
                         onKeyDown={(e) => {
                             e.key === 'Enter' && handleSubmit()
+                             
                             console.log(input)
                         }}
                         disabled={submit}
@@ -116,7 +120,8 @@ function Game() {
                     <p>{verMessage && verMessage}</p>
                 </div>
             </div >)
-            : <div>Game over</div>}
+            : <div>Game over</div>
+        }
         </>
     )
 }

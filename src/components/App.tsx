@@ -16,7 +16,8 @@ function App() {
           <div className='title'>
             <a href="https://github.com/ChainLingo/chainlingo-front" target="_blank">
               <img src={logo} className="logo" alt="Moving chainlingo logo" />
-            </a><p>ChainLingo 1.0</p>
+            </a>
+            <a href="https://main--chainlingo.netlify.app/" target="_blank">ChainLingo 1.0</a>
           </div>
         </div>
       </header>
