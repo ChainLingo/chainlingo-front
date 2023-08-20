@@ -42,7 +42,7 @@ export default function Game() {
 
     return (
         <>{gameOver ?
-            <GameOver />
+            <GameOver stat={stat}/>
             : (<div className="container">
                 <div className="timer">Time remaining: {timeLeft} seconds</div>
                 <div className="score">
