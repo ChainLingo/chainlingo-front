@@ -40,9 +40,14 @@ export default function Game() {
         }, 2000)
     }
 
+    const updateGameOver = (): void => {
+        setGameOver(false)
+        setTimeLeft(60)
+    }
+
     return (
         <>{gameOver ?
-            <GameOver stat={stat}/>
+            <GameOver stat={stat} setGameOver={updateGameOver} />
             : (<div className="container">
                 <div className="timer">Time remaining: {timeLeft} seconds</div>
                 <div className="score">

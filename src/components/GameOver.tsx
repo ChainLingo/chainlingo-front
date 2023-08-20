@@ -1,14 +1,17 @@
 import { FC, useState } from 'react'
 import { gameStats } from '../global-type'
 
-const GameOver: FC<{ stat: gameStats }> = ({ stat }) => {
+type props = {
+    stat: gameStats,
+    setGameOver: () => void
+}
+
+const GameOver: FC<props> = ({ stat, setGameOver }) => {
     const [input, setInput] = useState<string>('')
     const [submit, setSubmit] = useState<boolean>(false);
 
     const handleSubmit: () => void = async () => {
         setSubmit(true);
-        console.log('input',input)
-        console.log('stat',stat)
         const data = {
             user_name: input,
             streak: stat.streak,
@@ -46,6 +49,7 @@ const GameOver: FC<{ stat: gameStats }> = ({ stat }) => {
                 disabled={submit} />
             <div className='submit'><button onClick={handleSubmit} >Submit</button></div>
         </div >
+        <div><button onClick={setGameOver}>Play again?</button></div>
     </>)
 }
 export default GameOver
