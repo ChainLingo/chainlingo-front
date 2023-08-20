@@ -1,0 +1,7 @@
+export { default as Game } from './Game'
+export { default as GameOver } from './GameOver'
+export { default as LeaderBoard } from './LeaderBoard'
+export { default as Rule } from './Rule'
+export { default as Header } from './Header'
+export { default as PlayerTiles } from './PlayerTiles'
+export { default as PlayerInput } from './PlayerInput'

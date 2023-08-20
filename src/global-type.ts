@@ -10,6 +10,7 @@ export interface record {
 export interface gameStats {
     fieldTile: string,
     history: string[],
-    score: { streak: number, longest: string[] }
+    streak: number,
+    longest: string[],
     playerTiles: string[]
 }

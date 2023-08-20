@@ -5,10 +5,10 @@
     gap: 0px 0px;
     grid-auto-flow: row;
     grid-template-areas:
-        "timer History"
-        "field-tile History"
+        "timer score"
+        "field-tile player-tile"
         "input input"
-        "score player-tile";
+        "history history";
 }
 
 .desk {
@@ -61,11 +61,15 @@
     grid-area: bottom-right;
 }
 
-.History {
-    grid-area: History;
+.history {
+    grid-area: history;
 }
 
 .input {
     grid-area: input;
     display: block;
+}
+
+.player-input {
+    text-transform: capitalize;
 }

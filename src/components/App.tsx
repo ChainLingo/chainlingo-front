@@ -1,26 +1,14 @@
-import { useState } from 'react'
-import logo from '/assets/chainlingo_logo.svg'
+import { useState, useEffect } from 'react'
 import '../css/App.css'
-import LeaderBoard from './LeaderBoard';
-import Rule from './Rule';
-import Game from './Game';
+import { Rule, Game, LeaderBoard, Header } from './index';
 
 
 function App() {
   const [isPlaying, setIsPlaying] = useState(false);
-
+  useEffect(() => { fetch('https://chain-lingo-back.onrender.com/', { method: 'GET' }) }, []) //waking up the API (deployed on render and it sleeps in 15 min of no action)
   return (
     <>
-      <header>
-        <div className='header'>
-          <div className='title'>
-            <a href="https://github.com/ChainLingo/chainlingo-front" target="_blank">
-              <img src={logo} className="logo" alt="Moving chainlingo logo" />
-            </a>
-            <a href="https://main--chainlingo.netlify.app/" target="_blank">ChainLingo 1.0</a>
-          </div>
-        </div>
-      </header>
+      <header><Header /></header>
       <main>
         <div className="game">
           {!isPlaying ?
