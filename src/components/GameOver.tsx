@@ -5,9 +5,29 @@ const GameOver: FC<{ stat: gameStats }> = ({ stat }) => {
     const [input, setInput] = useState<string>('')
     const [submit, setSubmit] = useState<boolean>(false);
 
-    const handleSubmit: () => void = () => {
+    const handleSubmit: () => void = async () => {
         setSubmit(true);
-        console.log(input)
+        console.log('input',input)
+        console.log('stat',stat)
+        const data = {
+            user_name: input,
+            streak: stat.streak,
+            max_len: stat.longest[0].length,
+        }
+        try {
+            const response = await fetch("https://chain-lingo-back.onrender.com/record", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+
+            if (response.ok) { console.log("Record inserted successfully"); }
+            else { console.error("Error inserting record"); }
+        }
+        catch (e) { console.error("Something went wrong...", e); }
+
         setSubmit(false)
     }
     return (<>
