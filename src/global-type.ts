@@ -7,3 +7,9 @@ export interface record {
     max_len: number,
 }
 
+export interface gameStats {
+    fieldTile: string,
+    history: string[],
+    score: { streak: number, longest: string[] }
+    playerTiles: string[]
+}
