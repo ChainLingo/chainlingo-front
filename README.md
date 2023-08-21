@@ -3,7 +3,7 @@ Welcome to ChainLingo, a unique word-chaining game that challenges your vocabula
 ChainLingo is an engaging word puzzle game where players must create words by chaining letters together. The game challenges your vocabulary and word-building skills. It's a fun and educational game suitable for all ages.
 
 ## Demo
-Deployed via netlify [https://main--chainlingo.netlify.app/]([https://main--chainlingo.netlify.app/)
+Deployed via netlify [https://main--chainlingo.netlify.app/](https://main--chainlingo.netlify.app/)
 
 ## Technologies Used
 -React.js
