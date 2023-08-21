@@ -6,9 +6,9 @@ ChainLingo is an engaging word puzzle game where players must create words by ch
 Deployed via netlify [https://main--chainlingo.netlify.app/](https://main--chainlingo.netlify.app/)
 
 ## Technologies Used
--React.js
--TypeScript
--HTML/CSS
+- React.js
+- TypeScript
+- HTML/CSS
 
 ## How to Install Locally
 If you would like to run the app locally, please take the following steps.
