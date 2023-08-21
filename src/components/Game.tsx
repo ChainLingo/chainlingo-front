@@ -54,7 +54,9 @@ export default function Game() {
                 <div className="score">
                     <p>Streak: {stat.history.length - 1}<br />{`Longest: ${stat.longest} (${stat.longest[0].length} letters)`}</p></div>
                 <div className="field-tile">Game tile:<br />{stat.fieldTile.toUpperCase()}</div>
-                <div className='player-tile'><PlayerTiles playerTiles={stat.playerTiles} /></div>
+                <div className='player-tile'>
+                    <div className='tile-desc'>Your Tile</div>
+                    <PlayerTiles playerTiles={stat.playerTiles} /></div>
                 <div className="input">
                     <div className='desc'>{verMessage}</div>
                     <PlayerInput stat={stat} updateStat={updateStats} updateMessage={updateMessage} /></div>
