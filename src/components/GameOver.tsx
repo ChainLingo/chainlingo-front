@@ -1,5 +1,6 @@
 import { FC, useState } from 'react'
 import { gameStats } from '../global-type'
+import '../css/GameOver.css'
 
 type props = {
     stat: gameStats,
@@ -30,8 +31,6 @@ const GameOver: FC<props> = ({ stat, setGameOver }) => {
             else { console.error("Error inserting record"); }
         }
         catch (e) { console.error("Something went wrong...", e); }
-
-        setSubmit(false)
     }
     return (<>
         <div className="gameover">
@@ -47,9 +46,13 @@ const GameOver: FC<props> = ({ stat, setGameOver }) => {
                 onKeyDown={(e) => { e.key === 'Enter' && handleSubmit() }}
                 placeholder='Your name'
                 disabled={submit} />
-            <div className='submit'><button onClick={handleSubmit} >Submit</button></div>
+            <div className='submit'>
+                {submit
+                    ? <h2 className='submitted-desc'>Score registered!</h2>
+                    : <button onClick={handleSubmit} disabled={submit} >Submit</button>}
+            </div>
         </div >
-        <div><button onClick={setGameOver}>Play again?</button></div>
+        <div><button onClick={setGameOver} className='play-again'>Play again?</button></div>
     </>)
 }
 export default GameOver
