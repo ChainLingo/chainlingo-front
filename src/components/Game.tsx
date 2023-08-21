@@ -42,6 +42,7 @@ export default function Game() {
 
     const updateGameOver = (): void => {
         setGameOver(false)
+        setStat(initialStat)
         setTimeLeft(60)
     }
 
@@ -52,7 +53,7 @@ export default function Game() {
                 <div className="timer">Time remaining: {timeLeft} seconds</div>
                 <div className="score">
                     <p>Streak: {stat.history.length - 1}<br />{`Longest: ${stat.longest} (${stat.longest[0].length} letters)`}</p></div>
-                <div className="field-tile">{stat.fieldTile.toUpperCase()}</div>
+                <div className="field-tile">Game tile:<br />{stat.fieldTile.toUpperCase()}</div>
                 <div className='player-tile'><PlayerTiles playerTiles={stat.playerTiles} /></div>
                 <div className="input">
                     <div className='desc'>{verMessage}</div>
