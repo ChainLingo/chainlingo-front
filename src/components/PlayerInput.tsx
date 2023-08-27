@@ -37,7 +37,7 @@ const PlayerInput: FC<props> = ({ stat, updateStat, updateMessage }) => {
                             fieldTile: lastChar,
                             playerTiles: updatePlayerTiles(prevStat.playerTiles, tileIndex)
                         })
-                        updateMessage('ChainedLingo!!');
+                        updateMessage('🎯ChainedLingo!!');
                         inputRef.current && (inputRef.current.value = '');
                     }
                     else if (response.status === 404) { updateMessage('Invalid word!'); }// Word is not valid
