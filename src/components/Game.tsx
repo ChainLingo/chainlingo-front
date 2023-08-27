@@ -17,7 +17,7 @@ export default function Game() {
         playerTiles: initialPlayerTiles
     }
     const [stat, setStat] = useState<gameStats>(initialStat);
-    const [verMessage, setVerMessage] = useState<string>('Pess "Enter" key to submit');
+    const [verMessage, setVerMessage] = useState<string>('Press "Enter" key to submit');
     const [gameOver, setGameOver] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState(60); // Initial time in seconds
 
@@ -36,7 +36,7 @@ export default function Game() {
     const updateMessage = (newMessage: string): void => {
         setVerMessage(newMessage)
         setTimeout(() => {
-            setVerMessage('Pess "Enter" key to submit')
+            setVerMessage('Press "Enter" key to submit')
         }, 2000)
     }
 
@@ -58,7 +58,7 @@ export default function Game() {
                     <div className='tile-desc'>Your Tile</div>
                     <PlayerTiles playerTiles={stat.playerTiles} /></div>
                 <div className="input">
-                    <div className='desc'>{verMessage}</div>
+                    <div className={`desc${verMessage.includes("Press") ? "" : verMessage.includes("Chain") ? " right" : " wrong"}`}>{verMessage}</div>
                     <PlayerInput stat={stat} updateStat={updateStats} updateMessage={updateMessage} /></div>
                 <div className="history">{stat.history.join(' 👉 ')}</div>
             </div >)

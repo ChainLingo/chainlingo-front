@@ -72,9 +72,19 @@
 .input {
     grid-area: input;
     display: block;
-    margin:1rem;
+    margin: 1rem;
 }
 
 .player-input {
     text-transform: capitalize;
+}
+
+.right {
+    color: green;
+    font-weight: bold;
+}
+
+.wrong {
+    color: red;
+    font-weight: bold;
 }
